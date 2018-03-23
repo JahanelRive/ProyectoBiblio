@@ -99,9 +99,8 @@ public void message(String sms){//este metodo es para enviar un sms  de adverten
     public void enterRecord(File path) {
         try {
            
-             if (readNumeration() == -666) 
-                message("Dato incorrecto C");
-             else if (readName() == null) 
+      
+              if (readName() == null) 
                 message("Dato incorrecto N");
              else if (readCode() == null) 
                 message("Dato incorrecto Avalible");
@@ -109,11 +108,12 @@ public void message(String sms){//este metodo es para enviar un sms  de adverten
             
               else {
 
-                beansDigital = new BeansDigital(readNumeration(),readCode(), readName(), readDescription(),  readPhoto(path));
+                beansDigital = new BeansDigital(readName(),readCode(),readPhoto(path), readYear(), readAuthor(), readDescription(), readType());
                 System.out.println("3");
-                if (method.searchEnumeration(beansDigital.getNumeration()) != -1) {
-                    message("This enumeration its repeat");
-                } else {
+                if(method.searchCode(beansDigital.getCode())!=null){
+                    message("This code its repeat");
+                } 
+                else {
                     method.addRecord(beansDigital);
                 }
                 System.out.println("4");
@@ -127,72 +127,91 @@ public void message(String sms){//este metodo es para enviar un sms  de adverten
             System.out.println("Error en enterToRegister" + e);
         }
     } 
+//    
+//    public void ModyfyRecordd(File path) {
+//        try {
+//          
+//              if (readNumeration() == -666) 
+//                message("Incorrect date");
+//             else if (readCode() == null) 
+//                message("Incorrect date");
+//             else if (readName() == null) 
+//                message("Incorrect date");
+//             else if(readDescription()==null) message("Date incorrec");
+//         
+//             else {
+//                int numeration = method.searchEnumeration(readNumeration());
+//                if (fieldPhoto.getText().equalsIgnoreCase(""))//en caso al reg la ruta f este vacia
+//                
+//          beansDigital = new BeansDigital(readName(),readCode(), readPhoto2(numeration), readYear(), readAuthor(),readDescription(),readNumeration(), readType());
+//                 else 
+//                    beansDigital = new BeansDigital( readName(),readCode(), readPhoto(path), readYear(), readAuthor(), readDescription(),readNumeration(), readType());
+//                
+//                if (numeration == -1)  method.addRecord(beansDigital);
+//                 else 
+//                    method.modifyRecord(numeration, beansDigital);
+//                
+//
+//                writeSerializable();
+//                listarRegistro();
+//            }
+//        } catch (Exception e) {
+//            System.out.println("error listar registro");
+//        }
+//    }
+//
+//       public void deleteRecordd() {
+//        try {
+//            if (readCode() == null) 
+//                message("date Inco");
+//             else {
+//                String numeration = method.searchCode(readCode());
+//                if (numeration == null) 
+//                    message("Enumeration exis");
+//                 else {
+//                    int s = JOptionPane.showConfirmDialog(null, "delete");
+//                    if (s == 0) {
+//                        method.deleteRecord(numeration);
+//
+//                        writeSerializable();
+//                        listarRegistro();
+//                    }
+//                }
+//            }
+//        } catch (HeadlessException e) {
+//        }
+//
+//    }
     
-    public void ModyfyRecordd(File path) {
-        try {
-          
-              if (readNumeration() == -666) 
-                message("Incorrect date");
-             else if (readCode() == null) 
-                message("Incorrect date");
-             else if (readName() == null) 
-                message("Incorrect date");
-             else if(readDescription()==null) message("Date incorrec");
-         
-             else {
-                int numeration = method.searchEnumeration(readNumeration());
-                if (fieldPhoto.getText().equalsIgnoreCase(""))//en caso al reg la ruta f este vacia
-                
-          beansDigital = new BeansDigital(readNumeration(), readCode(), readName(),readDescription(), readPhoto2(numeration));
-                 else 
-                    beansDigital = new BeansDigital(readNumeration(), readCode(), readName(),readDescription(), readPhoto(path));
-                
-                if (numeration == -1)  method.addRecord(beansDigital);
-                 else 
-                    method.modifyRecord(numeration, beansDigital);
-                
-
-                writeSerializable();
-                listarRegistro();
-            }
-        } catch (Exception e) {
-            System.out.println("error listar registro");
-        }
+    public String readYear(){
+     try{   
+    String year= fieldYear.getText();
+    return year;
+     }catch(Exception e){
+          return null;   
+             }
     }
-
-       public void deleteRecordd() {
-        try {
-            if (readNumeration() == -666) 
-                message("date Inco");
-             else {
-                int numeration = method.searchEnumeration(readNumeration());
-                if (numeration == -1) 
-                    message("Enumeration exis");
-                 else {
-                    int s = JOptionPane.showConfirmDialog(null, "delete");
-                    if (s == 0) {
-                        method.deleteRecord(numeration);
-
-                        writeSerializable();
-                        listarRegistro();
-                    }
-                }
-            }
-        } catch (HeadlessException e) {
-        }
-
-    }
     
-    
+       public String readAuthor(){
+       try{
+       String author= fieldAuthor.getText();
+       return author;
+       }catch(Exception e){
+       return null;
+       }
+       
+       }
+       
+       public String readType(){
+       try{
+       String typeBook= fieldBook.getText();
+       return typeBook;
+       }catch(Exception e){
+       return null;
+       }
+       }
   
-       public int readNumeration() {
-        try {
-            int numeration = Integer.parseInt(fieldNumeration.getText());
-            return numeration;
-        } catch (NumberFormatException e) {
-            return -666;
-        }
-    }
+   
          
     public String readCode() {
         try {
@@ -254,10 +273,10 @@ public byte[] readPhoto2(int code){
             }
         };
 
-             modelo.addColumn("Numeration");
-             modelo.addColumn("Code");
+            // modelo.addColumn("Numeration");
+           
              modelo.addColumn("Name ");
-             modelo.addColumn("Description ");
+             modelo.addColumn("Code");
              modelo.addColumn("Photo ");
 
              table.setDefaultRenderer(Object.class, new ImageTable2());
@@ -267,10 +286,12 @@ public byte[] readPhoto2(int code){
              for (int i = 0; i < method.quantifyRecord(); i++) {
                  beansDigital = method.getRecord(i);
 
-                 row[0] = beansDigital.getNumeration();
+        
+                
+                 row[0] = beansDigital.getName();
                  row[1] = beansDigital.getCode();
-                 row[2] = beansDigital.getName();
-                 row[3] = beansDigital.getDescription();
+                 
+            
 
             try{
                 byte[] bi = beansDigital.getPhoto();
@@ -278,10 +299,10 @@ public byte[] readPhoto2(int code){
                 InputStream in = new ByteArrayInputStream(bi);
                 imagee = ImageIO.read(in);
                 ImageIcon img = new ImageIcon(imagee.getScaledInstance(60, 60, 0));
-                row[4] = new JLabel(img);
+                row[2] = new JLabel(img);
 
             } catch (IOException e) {
-                row[4] = "No imagen";
+                row[2] = "No imagen";
             }
 
             modelo.addRow(row);
@@ -304,14 +325,12 @@ public byte[] readPhoto2(int code){
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         lPhoto = new javax.swing.JLabel();
         fieldCode = new javax.swing.JTextField();
-        fieldNumeration = new javax.swing.JTextField();
         fieldName = new javax.swing.JTextField();
         fieldDescription = new javax.swing.JTextField();
         fieldPhoto = new javax.swing.JTextField();
@@ -324,16 +343,17 @@ public byte[] readPhoto2(int code){
         limpiar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        fieldYear = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        fieldAuthor = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        fieldBook = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setForeground(new java.awt.Color(255, 0, 0));
-
-        jLabel1.setBackground(new java.awt.Color(0, 51, 102));
-        jLabel1.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText("Number:");
 
         jLabel2.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
@@ -440,6 +460,24 @@ public byte[] readPhoto2(int code){
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/file_pdf.png"))); // NOI18N
         jLabel6.setText("Register Book Digital");
 
+        jLabel7.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel7.setText("Year of publication");
+
+        jLabel8.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel8.setText("Author");
+
+        jLabel9.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel9.setText("Type of Book:");
+
+        fieldBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldBookActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -447,41 +485,57 @@ public byte[] readPhoto2(int code){
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel3))
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(fieldNumeration, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(32, 32, 32)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(295, 295, 295))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fieldBook, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(205, 205, 205)))
+                                .addComponent(lPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(fieldYear, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(195, 195, 195)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldPhoto)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(18, 18, 18)
-                                        .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(50, 50, 50)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
-                            .addComponent(fieldPhoto)
-                            .addComponent(lPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                                        .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jLabel8)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(fieldAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(158, 158, 158)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(aceept)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(modify)
                 .addGap(74, 74, 74)
                 .addComponent(delete)
@@ -495,33 +549,40 @@ public byte[] readPhoto2(int code){
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(fieldNumeration, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(28, 28, 28)
+                            .addComponent(jLabel8)
+                            .addComponent(fieldAuthor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)))
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(fieldPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(fieldBook, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(fieldYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fieldPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addGap(23, 23, 23)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
@@ -543,9 +604,10 @@ public byte[] readPhoto2(int code){
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -557,7 +619,7 @@ public byte[] readPhoto2(int code){
 
     private void aceeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceeptActionPerformed
   File path = new File(fieldPhoto.getText());
-        enterRecord(path);
+    enterRecord(path);
     }//GEN-LAST:event_aceeptActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -578,44 +640,28 @@ public byte[] readPhoto2(int code){
 
     private void modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyActionPerformed
         File path= new File(fieldPhoto.getText());
-        ModyfyRecordd(path);
+//        ModyfyRecordd(path);
     }//GEN-LAST:event_modifyActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-     deleteRecordd();
+//     deleteRecordd();
     }//GEN-LAST:event_deleteActionPerformed
 
     private void limpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_limpiarActionPerformed
      fieldCode.setText("");
      fieldDescription.setText("");
      fieldName.setText("");
-     fieldNumeration.setText("");
+    
      
     }//GEN-LAST:event_limpiarActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
-          clic_tabla = table.rowAtPoint(evt.getPoint());
-   
-        int enumeration = (int) table.getValueAt(clic_tabla, 0);
-        String code =""+ table.getValueAt(clic_tabla, 1);
-        String name = "" + table.getValueAt(clic_tabla, 2);
-       Object description = "" + table.getValueAt(clic_tabla, 3);
-     
-
-
-        fieldNumeration.setText(String.valueOf(enumeration));
-        fieldCode.setText(code);
-        fieldName.setText(name);
-       
-        fieldDescription.setText(String.valueOf(description));
-      
         
-        try{
-            JLabel lbl = (JLabel)table.getValueAt(clic_tabla, 4);
-            lPhoto.setIcon(lbl.getIcon());
-        }catch(Exception ex){
-        }
     }//GEN-LAST:event_tableMouseClicked
+
+    private void fieldBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldBookActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldBookActionPerformed
 
     /**
      * @param args the command line arguments
@@ -655,19 +701,23 @@ public byte[] readPhoto2(int code){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aceept;
     private javax.swing.JButton delete;
+    private javax.swing.JTextField fieldAuthor;
+    private javax.swing.JTextField fieldBook;
     private javax.swing.JTextField fieldCode;
     private javax.swing.JTextField fieldDescription;
     private javax.swing.JTextField fieldName;
-    private javax.swing.JTextField fieldNumeration;
     private javax.swing.JTextField fieldPhoto;
+    private javax.swing.JTextField fieldYear;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lPhoto;

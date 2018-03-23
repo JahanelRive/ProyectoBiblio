@@ -11,16 +11,18 @@ import java.io.Serializable;
  *
  * @author karol
  */
-public class BeansAudiovisual implements Serializable{
+public class BeansAudiovisual  extends BeansSuperAudioVisual implements Serializable{
     private int code;
     private String name;
     private int quantify;
     byte[] photo;
 
     public BeansAudiovisual() {
+        super();
     }
 
-    public BeansAudiovisual(int code, String name, int quantify, byte[] photo) {
+    public BeansAudiovisual(String brand, String size, String projectorType, String color, int code, String name, int quantify, byte[] photo) {
+        super(brand,size,projectorType, color);
         this.code = code;
         this.name = name;
         this.quantify = quantify;
@@ -61,7 +63,7 @@ public class BeansAudiovisual implements Serializable{
 
     @Override
     public String toString() {
-        return "BeansAudiovisual{" + "code=" + code + ", name=" + name + ", quantify=" + quantify + ", photo=" + photo + '}';
+        return super.toString()+ "BeansAudiovisual{"  + "code=" + code + ", name=" + name + ", quantify=" + quantify + ", photo=" + photo + '}';
     }
 
    

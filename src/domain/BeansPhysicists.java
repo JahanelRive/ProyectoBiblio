@@ -12,9 +12,9 @@ import java.io.Serializable;
  * @author karol
  */
 public class BeansPhysicists extends BeansBook implements Serializable {
-
+    int enumeration;
     String nameBook;
-    String codigoBook;
+    String codeBook;
     int numberBookAvailable;
     byte[] photo;
 
@@ -24,14 +24,26 @@ public class BeansPhysicists extends BeansBook implements Serializable {
     }
 
 
-    public BeansPhysicists(String nameBook, String codigoBook, int numberBookAvailable, byte[] photo, String year, String author, Object description, int enumeration, String tipoLibro) {
-        super(year, author, description, enumeration, tipoLibro);
+    public BeansPhysicists(int enumeration, String nameBook, String codeBook, int numberBookAvailable, byte[] photo, String year, String author, Object description, String tipoLibro) {
+        super(year, author, description, tipoLibro);
+       this.enumeration=enumeration;
         this.nameBook = nameBook;
-        this.codigoBook = codigoBook;
+        this.codeBook = codeBook;
         this.numberBookAvailable = numberBookAvailable;
         this.photo = photo;
     }
 
+    public int getEnumeration() {
+        return enumeration;
+    }
+
+    public void setEnumeration(int enumeration) {
+        this.enumeration = enumeration;
+    }
+
+    
+    
+    
     public String getNameBook() {
         return nameBook;
     }
@@ -40,12 +52,12 @@ public class BeansPhysicists extends BeansBook implements Serializable {
         this.nameBook = nameBook;
     }
 
-    public String getCodigoBook() {
-        return codigoBook;
+    public String getCodeBook() {
+        return codeBook;
     }
 
-    public void setCodigoBook(String codigoBook) {
-        this.codigoBook = codigoBook;
+    public void setCodeBook(String codeBook) {
+        this.codeBook = codeBook;
     }
 
     public int getNumberBookAvailable() {
@@ -66,8 +78,10 @@ public class BeansPhysicists extends BeansBook implements Serializable {
 
     @Override
     public String toString() {
-        return  super.toString()+"BeansPhysicists{" + "nameBook=" + nameBook + ", codigoBook=" + codigoBook + ", numberBookAvailable=" + numberBookAvailable + ", photo=" + photo + '}';
+        return  super.toString()+"BeansPhysicists{" + "enumeration=" + enumeration + ", nameBook=" + nameBook + ", codeBook=" + codeBook + ", numberBookAvailable=" + numberBookAvailable + ", photo=" + photo + '}';
     }
+
+    
 
 
 

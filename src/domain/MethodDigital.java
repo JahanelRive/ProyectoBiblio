@@ -56,10 +56,11 @@ public class MethodDigital implements Serializable {
     esta variable contendra la informacion  que hay en nuestro campo de texto de la enumeracion, compara la enumeracion con nuestra lista
     si las enumeraiones fuesen repetidas, me devuelve la posicion, sino si fuesen distintas me devuelve un -1
     */
-    public int searchEnumeration(int numeration){
+    public String searchCode(String code){
         for(int i = 0; i < quantifyRecord(); i++){
-            if(numeration == getRecord(i).getNumeration())return i;
+            if(code .equals( getRecord(i).getCode()))
+                return code;
         }
-        return -1;
+        return null;
     }
 }

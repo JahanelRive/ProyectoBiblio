@@ -6,26 +6,27 @@
 package domain;
 
 import Interface.RegisterBookInterface;
+import java.io.Serializable;
 
 /**
  *
  * @author karol
  */
-public class BeansBook {
+public class BeansBook  implements Serializable{
     private String year;
     private String author;
     private Object description;
-    private int enumeration;
+    //private int enumeration;
     private String tipoLibro;
 
     public BeansBook() {
     }
 
-    public BeansBook(String year, String author, Object description, int enumeration, String tipoLibro) {
+    public BeansBook(String year, String author, Object description, String tipoLibro) {
         this.year = year;
         this.author = author;
         this.description = description;
-        this.enumeration = enumeration;
+        //this.enumeration = enumeration;
         this.tipoLibro = tipoLibro;
     }
 
@@ -53,13 +54,13 @@ public class BeansBook {
         this.description = description;
     }
 
-    public int getEnumeration() {
-        return enumeration;
-    }
-
-    public void setEnumeration(int enumeration) {
-        this.enumeration = enumeration;
-    }
+//    public int getEnumeration() {
+//        return enumeration;
+//    }
+//
+//    public void setEnumeration(int enumeration) {
+//        this.enumeration = enumeration;
+//    }
 
     public String getTipoLibro() {
         return tipoLibro;
@@ -71,7 +72,7 @@ public class BeansBook {
 
     @Override
     public String toString() {
-        return "BeansBook{" + "year=" + year + ", author=" + author + ", description=" + description + ", enumeration=" + enumeration + ", tipoLibro=" + tipoLibro + '}';
+        return "BeansBook{" + "year=" + year + ", author=" + author + ", description=" + description + ", tipoLibro=" + tipoLibro + '}';
     }
 
    

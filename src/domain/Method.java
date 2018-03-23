@@ -58,10 +58,19 @@ public class Method  implements Serializable{//implementado serializable para tr
     */
     public int searchEnumeration(int enumeration){
         for(int i = 0; i < quantifyRecord(); i++){
-            if(enumeration == getRecord(i).getEnumeration())return i;
+            if(enumeration == getRecord(i).getEnumeration())
+             return i;
         }
         return -1;
     }
+       public String searchCode(String code){
+        for(int i = 0; i < quantifyRecord(); i++){
+            if(code .equals(getRecord(i).getCodeBook()))
+                return code;
+        }
+        return null;
+    }
+
 
 }
 

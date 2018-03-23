@@ -33,23 +33,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AudiovisualInterface extends javax.swing.JFrame {
     MethodAudioVisual method;
-    int clic_tabla;
+    
     String path = "registerAudioVisual.bin";
     BeansAudiovisual beansAudioVisual;
 
     public AudiovisualInterface() {
         initComponents();
         method = new MethodAudioVisual();
-        beansAudioVisual= new BeansAudiovisual();
-        try{
-           readSerializable();
-           listarRegistro();
-            
-        }catch(Exception e){System.out.println("Error");}
+        beansAudioVisual = new BeansAudiovisual();
+        try {
+            readSerializable();
+            listarRegistro();
+
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
     }
 
     
-     /*Este metodo lo que hace es leer nuestro archivo, en la condicion, preguntamos, si lo que hay en nuestro archivo es diferente de null
+    /*Este metodo lo que hace es leer nuestro archivo, en la condicion, preguntamos, si lo que hay en nuestro archivo es diferente de null
     entonces que nos lo escriba, le hacemmos un canstins*/
     public void readSerializable() {
         try {
@@ -65,8 +67,9 @@ public class AudiovisualInterface extends javax.swing.JFrame {
 
         }
     }
+
     /////////ESCRIBE EN EL ARCHIVO///////////////
-     public void writeSerializable() {
+    public void writeSerializable() {
         FileOutputStream fos;
         ObjectOutputStream out;
         try {
@@ -82,68 +85,65 @@ public class AudiovisualInterface extends javax.swing.JFrame {
             System.out.println("error en writeBin");
         }
     }
-    
-  ////////////END WRITE//////////////////////  
-    
- public void message(String sms){//este metodo es para enviar un sms  de advertencia al usuario, en caso de un error
+
+    ////////////END WRITE//////////////////////  
+    public void message(String sms) {//este metodo es para enviar un sms  de advertencia al usuario, en caso de un error
         JOptionPane.showMessageDialog(null, sms);
     }
- 
+
     public void enterRecord(File path) {
         try {
-           
-             if (readCode() == -666) 
-                message("Dato incorrecto C");
-             else if (readName() == null) 
-                message("Dato incorrecto N");
-             else if (readQuantify() == -666) 
-                message("Dato incorrecto Avalible");
-            
-            
-              else {
 
-                beansAudioVisual = new BeansAudiovisual(readCode(), readName(), readQuantify(),  readPhoto(path));
+            if (readCode() == -666) {
+                message("Dato incorrecto C");
+            } else if (readName() == null) {
+                message("Dato incorrecto N");
+            } else if (readQuantify() == -666) {
+                message("Dato incorrecto Avalible");
+            } else {
+
+                beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto(path));
                 System.out.println("3");
                 if (method.searchEnumeration(beansAudioVisual.getCode()) != -1) {
                     message("This enumeration its repeat");
                 } else {
                     method.addRecord(beansAudioVisual);
                 }
-                System.out.println("4");
+             
                 writeSerializable();//quitar
-                System.out.println("5");
+            
                 listarRegistro();
-                System.out.println("6");
+              clear();
             }
             System.out.println("7");
         } catch (Exception e) {
             System.out.println("Error en enterToRegister" + e);
         }
-    } 
-    
-       public void ModyfyRecordd(File path) {
+    }
+
+    public void ModyfyRecordd(File path) {
         try {
-          
-              if (readCode() == -666) 
+
+            if (readCode() == -666) {
                 message("Incorrect date");
-             else if (readName() == null) 
+            } else if (readName() == null) {
                 message("Incorrect date");
-             else if (readQuantify() == -666) 
+            } else if (readQuantify() == -666) {
                 message("Incorrect date");
-            
-         
-             else {
+            } else {
                 int code = method.searchEnumeration(readCode());
                 if (fieldPhoto.getText().equalsIgnoreCase(""))//en caso al reg la ruta f este vacia
-                
-          beansAudioVisual = new BeansAudiovisual(readCode(), readName(), readQuantify(),  readPhoto2(code));
-                 else 
-                    beansAudioVisual = new BeansAudiovisual(readCode(), readName(), readQuantify(), readPhoto(path));
-                
-                if (code == -1)  method.addRecord(beansAudioVisual);
-                 else 
+                {
+                    beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto2(code));
+                } else {
+                    beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto(path));
+                }
+
+                if (code == -1) {
+                    method.addRecord(beansAudioVisual);
+                } else {
                     method.modifyRecord(code, beansAudioVisual);
-                
+                }
 
                 writeSerializable();
                 listarRegistro();
@@ -153,15 +153,15 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         }
     }
 
-       public void deleteRecordd() {
+    public void deleteRecordd() {
         try {
-            if (readCode() == -666) 
+            if (readCode() == -666) {
                 message("date Inco");
-             else {
+            } else {
                 int code = method.searchEnumeration(readCode());
-                if (code == -1) 
+                if (code == -1) {
                     message("Enumeration exis");
-                 else {
+                } else {
                     int s = JOptionPane.showConfirmDialog(null, "delete");
                     if (s == 0) {
                         method.deleteRecord(code);
@@ -175,9 +175,44 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         }
 
     }
-    
-    
-       public int readCode() {
+
+    public String readBrand() {
+        try {
+            String brand = fieldBrand.getText();
+            return brand;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String readSize() {
+        try {
+            String size = fieldSize.getText();
+            return size;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String readProjectType() {
+        try {
+            String project = fieldProject.getText();
+            return project;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public String readColor() {
+        try {
+            String color = fieldColor.getText();
+            return color;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int readCode() {
         try {
             int code = Integer.parseInt(fieldCode.getText());
             return code;
@@ -185,10 +220,8 @@ public class AudiovisualInterface extends javax.swing.JFrame {
             return -666;
         }
     }
- 
-    
-    
-       public int readQuantify() {
+
+    public int readQuantify() {
         try {
             int quantify = Integer.parseInt(fieldQuantify.getText());
             return quantify;
@@ -196,6 +229,7 @@ public class AudiovisualInterface extends javax.swing.JFrame {
             return -666;
         }
     }
+
     public String readName() {
         try {
             String name = (fieldName.getText());
@@ -204,8 +238,7 @@ public class AudiovisualInterface extends javax.swing.JFrame {
             return null;
         }
     }
-    
-    
+
     public byte[] readPhoto(File path) {
         try {
             byte[] icono = new byte[(int) path.length()];
@@ -217,57 +250,52 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         }
     }
 
- 
- 
-public byte[] readPhoto2(int code){
-            beansAudioVisual = method.getRecord(code);
-            try{
-               return beansAudioVisual.getPhoto();
-            }catch(Exception ex){
-               return null;
-            }
+    public byte[] readPhoto2(int code) {
+        beansAudioVisual = method.getRecord(code);
+        try {
+            return beansAudioVisual.getPhoto();
+        } catch (Exception ex) {
+            return null;
         }
+    }
 
-    
-    
-     public void listarRegistro(){
-        DefaultTableModel modelo = new DefaultTableModel(){
+    public void listarRegistro() {
+        DefaultTableModel modelo = new DefaultTableModel() {
             @Override
-            public boolean isCellEditable(int row, int column){
+            public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-     modelo.addColumn("Code");
-    modelo.addColumn("Name");
-     modelo.addColumn("Quanitfy ");
-   
-    
-     modelo.addColumn("Foto");
-     table.setDefaultRenderer(Object.class, new ImageTable());
-  
+        modelo.addColumn("Code");
+        modelo.addColumn("Name");
+        modelo.addColumn("Quanitfy ");
+
+        modelo.addColumn("Foto");
+        table.setDefaultRenderer(Object.class, new ImageTable());
+
         Object row[] = new Object[modelo.getColumnCount()];
-     
-        for(int i = 0; i < method.quantifyRecord(); i++){
-         beansAudioVisual = method.getRecord(i);
-          
+
+        for (int i = 0; i < method.quantifyRecord(); i++) {
+            beansAudioVisual = method.getRecord(i);
+
             row[0] = beansAudioVisual.getCode();
             row[1] = beansAudioVisual.getName();
             row[2] = beansAudioVisual.getQuantify();
-            
-          try{
-                
-            byte[] bi =beansAudioVisual.getPhoto();
-            BufferedImage imagee=null;
-            InputStream in= new ByteArrayInputStream(bi);
-           imagee=ImageIO.read(in);
-           ImageIcon img= new ImageIcon(imagee.getScaledInstance(60,60,0));
-            row[3]= new JLabel(img);
-            
-            }catch(IOException e){
-             row[3]= "No imagen";
+
+            try {
+
+                byte[] bi = beansAudioVisual.getPhoto();
+                BufferedImage imagee = null;
+                InputStream in = new ByteArrayInputStream(bi);
+                imagee = ImageIO.read(in);
+                ImageIcon img = new ImageIcon(imagee.getScaledInstance(60, 60, 0));
+                row[3] = new JLabel(img);
+
+            } catch (IOException e) {
+                row[3] = "No imagen";
             }
-          
+
             modelo.addRow(row);
         }
         table.setModel(modelo);
@@ -275,7 +303,6 @@ public byte[] readPhoto2(int code){
     }
 
 
-    
     
     
     
@@ -306,11 +333,18 @@ public byte[] readPhoto2(int code){
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        fieldBrand = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        fieldSize = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        fieldProject = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        fieldColor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -353,9 +387,22 @@ public byte[] readPhoto2(int code){
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Code", "Quantify", "Name", "Photo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jButton2.setFont(new java.awt.Font("Lucida Handwriting", 1, 10)); // NOI18N
@@ -364,15 +411,6 @@ public byte[] readPhoto2(int code){
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("Lucida Handwriting", 1, 10)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/1492533564-arrow-43_83281.png"))); // NOI18N
-        jButton3.setText("Update");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
             }
         });
 
@@ -408,68 +446,93 @@ public byte[] readPhoto2(int code){
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/audio_volume_high (2).png"))); // NOI18N
         jLabel3.setText("AudioVisual Record");
 
+        jLabel6.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel6.setText("Brand");
+
+        jLabel7.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel7.setText("Size");
+
+        jLabel8.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel8.setText("Project Type");
+
+        jLabel9.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel9.setText("Color");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(25, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel4)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(62, 62, 62)
-                                            .addComponent(fieldQuantify, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(jLabel2))
-                                .addGap(57, 57, 57)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(53, 53, 53)
-                                .addComponent(jButton3)
-                                .addGap(48, 48, 48)
-                                .addComponent(jButton4)
-                                .addGap(34, 34, 34)
-                                .addComponent(jButton6))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(fieldBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fieldSize))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(fieldQuantify, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addGap(2, 2, 2)
+                                                .addComponent(jLabel6)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(jLabel4))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(jLabel1))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel8)
+                                            .addComponent(fieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                            .addComponent(fieldProject))
+                                        .addGap(14, 14, 14)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(fieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                        .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jButton2)
+                        .addGap(60, 60, 60)
+                        .addComponent(jButton4)
+                        .addGap(59, 59, 59)
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fieldPhoto)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
-            .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel1))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldQuantify, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel2))
-                        .addGap(46, 46, 46)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -479,17 +542,46 @@ public byte[] readPhoto2(int code){
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldBrand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldProject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(fieldCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldQuantify, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(35, 35, 35))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel1))
+                                .addGap(69, 69, 69)))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -528,20 +620,26 @@ public byte[] readPhoto2(int code){
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-    fieldCode.setText("");
-    fieldName.setText("");
-    fieldQuantify.setText("");
-    
+clear();
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-      File path= new File(fieldPhoto.getText());
-        ModyfyRecordd(path);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    public void clear() {
+        fieldCode.setText("");
+        fieldName.setText("");
+        fieldQuantify.setText("");
+        fieldBrand.setText("");
+        fieldSize.setText("");
+        fieldProject.setText("");
+        fieldColor.setText("");
 
+    }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
       deleteRecordd();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tableMouseClicked
 
     
     
@@ -586,13 +684,16 @@ public byte[] readPhoto2(int code){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField fieldBrand;
     private javax.swing.JTextField fieldCode;
+    private javax.swing.JTextField fieldColor;
     private javax.swing.JTextField fieldName;
     private javax.swing.JTextField fieldPhoto;
+    private javax.swing.JTextField fieldProject;
     private javax.swing.JTextField fieldQuantify;
+    private javax.swing.JTextField fieldSize;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -601,6 +702,10 @@ public byte[] readPhoto2(int code){
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lPhoto;

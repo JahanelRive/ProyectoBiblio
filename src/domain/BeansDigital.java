@@ -11,34 +11,24 @@ import java.io.Serializable;
  *
  * @author karol
  */
-public class BeansDigital implements Serializable{
+public class BeansDigital extends BeansBook implements Serializable{
  
-    private int numeration;
+
     private String name;
     private String code;
-    Object description;
     byte[] photo;
 
-    public BeansDigital(int numeration,  String code, String name, Object description, byte[] photo) {
-        this.numeration = numeration;
+ 
+
+    public BeansDigital(String name, String code, byte[] photo, String year, String author, Object description, String tipoLibro) {
+        super(year, author, description, tipoLibro);
         this.name = name;
         this.code = code;
-        this.description = description;
         this.photo = photo;
+        
     }
 
-    public BeansDigital() {
-    }
-
-    public int getNumeration() {
-        return numeration;
-    }
-
-    public void setNumeration(int numeration) {
-        this.numeration = numeration;
-    }
-
-    public String getName() {
+    public Object getName() {
         return name;
     }
 
@@ -54,14 +44,6 @@ public class BeansDigital implements Serializable{
         this.code = code;
     }
 
-    public Object getDescription() {
-        return description;
-    }
-
-    public void setDescription(Object description) {
-        this.description = description;
-    }
-
     public byte[] getPhoto() {
         return photo;
     }
@@ -72,9 +54,9 @@ public class BeansDigital implements Serializable{
 
     @Override
     public String toString() {
-        return "BeansD{" + "numeration=" + numeration + ", name=" + name + ", code=" + code + ", description=" + description + ", photo=" + photo + '}';
+        return  super.toString()+ "BeansDigital{" + "name=" + name + ", code=" + code + ", photo=" + photo + '}';
     }
 
 
- 
+
 }
