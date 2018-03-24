@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interface;
+package GUI;
 
 import domain.BeansPhysicists;
 import domain.ImageTable;
@@ -50,11 +50,20 @@ public class RegisterBookInterface extends javax.swing.JFrame {
             readSerializable();
             listarRegistro();
             fieldPhoto.setEditable(false);
-
+            fieldEnumeration.setText("1");
+        
         } catch (Exception e) {
             System.out.println("error 1 al leer fisico");
         }
 
+    }
+    
+    public void m(){
+  int contador=1;
+  fieldEnumeration.setText(String.valueOf(contador));
+  contador++;
+    
+    
     }
 
     /*Este metodo lo que hace es leer nuestro archivo, en la condicion, preguntados, si lo que hay en nuestro archivo es diferente de null
@@ -97,72 +106,47 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
     public void ingresarRegistro(File path) {
         try {
-            if (readEnumeration() == -666) 
+            if (readEnumeration() == -666) {
                 message("Incorect date");
-          else if (readNumberBookAvailable() == -666) 
-               message("Incorrect date");
-     
+            }else if(nameNull().equals(null)){ 
+                message("Incorrect date");
+            }else if(codeNull().equals(null)){   
+                message("Incorrect date");
+            } else if(quantifyNull().equals(null)){
+                message("Incorrect date");
+                
+            }else if(yearNull().equals(null)){ 
+              message("Inocrrect date");  
+            }else if(authorNull().equals(null)){
+                message("Incorrect date");
+            }else if(descrptionNull().equals(null)){
+                message("Incorrect date");
+            } else if(typeBookNull().equals(null)){
+             message("Incorrect date");   
+            }else    
+            beansBooks = new BeansPhysicists(readEnumeration(), readName(), readCode(), readNumberBookAvailable(), readPhoto(path), readYear(), readAuthor(), readDescription(), readType());
+            if (method.searchCode(beansBooks.getCodeBook()) != null) {
+                //  if (method.searchEnumeration(beansBooks.getEnumeration()) != -1) {
+                message("This code its repeat");
+            } else {
+                method.addRecord(beansBooks);
+            }
 
-                beansBooks = new BeansPhysicists(readEnumeration(), readName(), readCode(),readNumberBookAvailable(), readPhoto(path), readYear(),readAuthor(), readDescription(), readType() );
-                  if(method.searchCode(beansBooks.getCodeBook())!=null){
-              //  if (method.searchEnumeration(beansBooks.getEnumeration()) != -1) {
-                    message("This enumeration its repeat");
-                } else {
-                    method.addRecord(beansBooks);
-                }
+            writeSerializable();
+            listarRegistro();
 
-                writeSerializable();
-                listarRegistro();
-
-           // }
-
+            // }
         } catch (Exception e) {
-            System.out.println("Error en enterToRegister" + e);
+           message("check if your data is correct");
         }
     }
 
-//    public void ModyfyRecordd(File path) {
-//        try{
-//            if (readEnumeration() == -666) 
-//                message("Incorrect date");
-////             else if (readCode() == null) 
-////                message("Incorrect date");
-////             else if (readName() == null) 
-////                message("Incorrect date");
-//             else if (readNumberBookAvailable() == -666) 
-//                message("Incorrect date");
-////             else if (readAuthor() == null) 
-////                message("Incorrect date");
-////             else if (readDescription() == null) 
-////                message("Incorrect date");
-//             else {
-//                int enumeration = method.searchEnumeration(readEnumeration());
-//                if (fieldPhoto.getText().equalsIgnoreCase(""))//en caso al reg la ruta f este vacia, que se agregue la foto
-//                 beansBooks = new BeansPhysicists(readEnumeration(),readName(),readCode(),readNumberBookAvailable(),readPhoto2(enumeration), readYear(), readAuthor(),readDescription(),readType());
-//                 else 
-//                    beansBooks = new BeansPhysicists(readEnumeration(),readName(),readCode(),readNumberBookAvailable(), readPhoto(path), readYear(),readAuthor(),readDescription(),readType());
-//                
-//
-//                if (enumeration == -1) 
-//                    method.addRecord(beansBooks);
-//                 else 
-//                    method.modifyRecord(enumeration, beansBooks);
-//                
-//
-//                writeSerializable();
-//                listarRegistro();
-//            }
-//        } catch (Exception e) {
-//            System.out.println("error listar registro");
-//        }
-//    }
 
     public void deleteRecordd() {
         try {
             if (readEnumeration() == -666) {
                 message("Incorrect date");
-            } 
-            else {
+            } else {
                 int enumeration = method.searchEnumeration(readEnumeration());
                 if (enumeration == -1) {
                     message("Existe ");
@@ -177,7 +161,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
                 }
             }
 
-
         } catch (HeadlessException e) {
         }
 
@@ -185,24 +168,24 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
 //EStos metodos son: para cuando el usuario ingrese un dato incorrecto en cada campo de texto
 //enviarles un sms de advertencia
-    public String readYear(){
-    try{
-    String year=(fieldYear.getText());
-    return year;
-    }catch(Exception e){
-    return null;
+    public String readYear() {
+        try {
+            String year = (fieldYear.getText());
+            return year;
+        } catch (Exception e) {
+            return null;
+        }
     }
+
+    public String readType() {
+        try {
+            String type = fieldType.getText();
+            return type;
+        } catch (Exception e) {
+            return null;
+        }
     }
-    
-    public String readType(){
-     try{   
-    String type=fieldType.getText();
-    return type;
-     }catch(Exception e){
-     return null;
-     }
-    }
-    
+
     public int readEnumeration() {
         try {
             int enumeration = Integer.parseInt(fieldEnumeration.getText());
@@ -229,7 +212,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
             return null;
         }
     }
-
 
     public int readNumberBookAvailable() {
         try {
@@ -285,16 +267,15 @@ public class RegisterBookInterface extends javax.swing.JFrame {
                 return false;
             }
         };
-       // dt.addColumn("Enumeration");
+        // dt.addColumn("Enumeration");
         dt.addColumn("Enumeration");
-          dt.addColumn("Name");
-          dt.addColumn("Code");
-         dt.addColumn("Number book Availabe");
+        dt.addColumn("Name");
+        dt.addColumn("Code");
+        dt.addColumn("Number book Availabe");
 //         dt.addColumn("Year");
 //         dt.addColumn("Author");
 //         dt.addColumn("Descripcion");
-
-//         dt.addColumn("Type book");
+//dt.addColumn("Type book");
         dt.addColumn("Foto");
 
         table.setDefaultRenderer(Object.class, new ImageTable());
@@ -305,8 +286,7 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
             beansBooks = method.getRecord(i);
 
-        
-            row[0]=beansBooks.getEnumeration();
+            row[0] = beansBooks.getEnumeration();
             row[1] = beansBooks.getNameBook();
             row[2] = beansBooks.getCodeBook();
             row[3] = beansBooks.getNumberBookAvailable();
@@ -315,7 +295,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 //            row[6] = beansBooks.getDescription();
 //            row[7]=beansBooks.getTipoLibro();
 //           
-        
 
             try {
                 byte[] bi = beansBooks.getPhoto();
@@ -333,13 +312,29 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         table.setModel(dt);
         table.setRowHeight(60);
     }
-
     
+    public String quantifyNull() {
+        try {
+            String quantify = "";
+            if (quantify.equals(fieldBooks.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+
+                return quantify;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
+    }
+
     public String nameNull() {
         try {
             String name = "";
             if (name.equals(fieldName.getText())) {
-                JOptionPane.showMessageDialog(null, "ENTRE");
+                JOptionPane.showMessageDialog(null, "Incorrect date");
                 return null;
             } else {
                 return name;
@@ -355,7 +350,7 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         try {
             String code = "";
             if (code.equals(fieldCode.getText())) {
-                JOptionPane.showMessageDialog(null, "ENTRE");
+                JOptionPane.showMessageDialog(null, "Incorrect date");
                 return null;
             } else {
                 return code;
@@ -367,11 +362,11 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         return null;
     }
 
-       public String authorNull() {
+    public String authorNull() {
         try {
             String author = "";
             if (author.equals(fieldAuthor.getText())) {
-                JOptionPane.showMessageDialog(null, "ENTRE");
+                JOptionPane.showMessageDialog(null, "Incorrect date");
                 return null;
             } else {
                 return author;
@@ -382,12 +377,12 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         }
         return null;
     }
-    
-       public String descrptionNull() {
+
+    public String descrptionNull() {
         try {
             String description = "";
             if (description.equals(fieldDescription.getText())) {
-                JOptionPane.showMessageDialog(null, "ENTRE");
+                JOptionPane.showMessageDialog(null, "Incorrect date");
                 return null;
             } else {
                 return description;
@@ -397,13 +392,12 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
         }
         return null;
-    } 
-       
-          public String typeBookNull() {
+    }
+    public String typeBookNull() {
         try {
             String typeBook = "";
-            if (typeBook.equals(fieldBooks.getText())) {
-                JOptionPane.showMessageDialog(null, "ENTRE");
+            if (typeBook.equals(fieldType.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
                 return null;
             } else {
                 return typeBook;
@@ -413,22 +407,31 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
         }
         return null;
-    } 
-       
+    }
+   
     
     
-    public boolean repeatCode(String code){
-    boolean ouput=false;
-   for(int i=0; i<method.quantifyRecord(); i++){
-    if(code.equalsIgnoreCase(beansBooks.getCodeBook())){
-    message("No puede registarrse");
-    System.out.println("code"+code  +"Beans"+beansBooks.getCodeBook());
-    ouput= false;
-    }else
-        ouput= true;
+    
+    public String yearNull() {
+        try {
+            String year = "";
+            if (year.equals(fieldYear.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+                
+                
+            } else {
+                return year;
+            }
+        } catch (Exception e) {
+            System.out.println("Incorrect date");
+
+        }
+        return null;
     }
-   return ouput;
-    }
+
+ 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -455,7 +458,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         table = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        delete = new javax.swing.JButton();
         lPhoto = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -547,15 +549,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
             }
         });
 
-        delete.setFont(new java.awt.Font("Lucida Handwriting", 1, 10)); // NOI18N
-        delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/action_exit_close_remove_13915.png"))); // NOI18N
-        delete.setText("Delete");
-        delete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteActionPerformed(evt);
-            }
-        });
-
         lPhoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/if_contact-new_23203.png"))); // NOI18N
         lPhoto.setBorder(javax.swing.BorderFactory.createEtchedBorder(java.awt.Color.white, java.awt.Color.white));
 
@@ -604,62 +597,62 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         jPanel.setLayout(jPanelLayout);
         jPanelLayout.setHorizontalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelLayout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldDescription, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanelLayout.createSequentialGroup()
+                                .addGap(209, 209, 209)
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(141, 141, 141)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
                                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fieldDescription, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanelLayout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelLayout.createSequentialGroup()
-                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLayout.createSequentialGroup()
-                                                .addComponent(jLabel7)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(fieldEnumeration, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanelLayout.createSequentialGroup()
-                                                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel3)
-                                                    .addComponent(jLabel10))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(21, 21, 21)
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanelLayout.createSequentialGroup()
+                                                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelLayout.createSequentialGroup()
+                                                        .addComponent(jLabel7)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(fieldEnumeration, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(jPanelLayout.createSequentialGroup()
+                                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(jLabel3)
+                                                            .addComponent(jLabel10))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(fieldBooks, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                                                            .addComponent(fieldType))))
+                                                .addGap(51, 51, 51)
+                                                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(jLabel2)
+                                                    .addComponent(jLabel8)
+                                                    .addComponent(jLabel9)
+                                                    .addComponent(jLabel1))
+                                                .addGap(31, 31, 31)
                                                 .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(fieldBooks, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                                                    .addComponent(fieldType))))
-                                        .addGap(51, 51, 51)
-                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel8)
-                                            .addComponent(jLabel9)
-                                            .addComponent(jLabel1))
-                                        .addGap(31, 31, 31)
-                                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(fieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                            .addComponent(fieldCode, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                                            .addComponent(fieldAuthor)
-                                            .addComponent(fieldYear))))
-                                .addGap(0, 3, Short.MAX_VALUE)))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lPhoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fieldPhoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(43, 43, 43))
-            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(fieldName, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                                    .addComponent(fieldCode)
+                                                    .addComponent(fieldAuthor)
+                                                    .addComponent(fieldYear))))
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lPhoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fieldPhoto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap())
         );
         jPanelLayout.setVerticalGroup(
             jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -707,11 +700,10 @@ public class RegisterBookInterface extends javax.swing.JFrame {
                         .addComponent(fieldDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14)
-                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(delete, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -721,7 +713,7 @@ public class RegisterBookInterface extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -736,14 +728,20 @@ public class RegisterBookInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      try{
-         String code= fieldCode.getText();
-        File pathh = new File(fieldPhoto.getText());
-     
-            message("Book register");
-        this.ingresarRegistro(pathh);
+         int contador=1;
+        try {
        
-      }catch(Exception e){ message("Date incorrete jb");}
+            File pathh = new File(fieldPhoto.getText());
+              this.ingresarRegistro(pathh);
+             if(evt.getSource()==jButton1){   
+                 contador=contador+1;
+                fieldEnumeration.setText(String.valueOf(contador ));
+           
+                      
+             }
+        } catch (Exception e) {
+            message("Date incorrete jb");
+        }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -764,28 +762,24 @@ public class RegisterBookInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_tableMouseClicked
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-      DeleteoAllOfField();
-     
+        DeleteoAllOfField();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    public void DeleteoAllOfField(){
-    
-    fieldBooks.setText("");
-      fieldCode.setText("");
-      fieldDescription.setText("");
-      fieldEnumeration.setText("");
-      fieldName.setText("");
-      fieldAuthor.setText("");
-      fieldYear.setText("");
-      fieldType.setText("");
-    
+    public void DeleteoAllOfField() {
+
+        fieldBooks.setText("");
+        fieldCode.setText("");
+        fieldDescription.setText("");
+        fieldEnumeration.setText("");
+        fieldName.setText("");
+        fieldAuthor.setText("");
+        fieldYear.setText("");
+        fieldType.setText("");
+
     }
     
     
-    private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-    deleteRecordd();
-    }//GEN-LAST:event_deleteActionPerformed
-
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
   this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -833,7 +827,6 @@ public class RegisterBookInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton delete;
     public javax.swing.JTextField fieldAuthor;
     public javax.swing.JTextField fieldBooks;
     public javax.swing.JTextField fieldCode;

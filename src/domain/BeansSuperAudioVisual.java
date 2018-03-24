@@ -11,11 +11,12 @@ import java.io.Serializable;
  *
  * @author karol
  */
-public class BeansSuperAudioVisual implements Serializable{
-   String brand;
-   String size;
-   String projectorType;
-   String color;
+public class BeansSuperAudioVisual implements Serializable {
+
+    String brand;
+    String size;
+    String projectorType;
+    String color;
 
     public BeansSuperAudioVisual() {
     }
@@ -63,12 +64,5 @@ public class BeansSuperAudioVisual implements Serializable{
     public String toString() {
         return "BeansSuperAudioVisual{" + "brand=" + brand + ", size=" + size + ", projectorType=" + projectorType + ", color=" + color + '}';
     }
-   
-    
-    
-    
-   
-   
-   
 
 }

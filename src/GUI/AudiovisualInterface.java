@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interface;
+package GUI;
 
 import domain.BeansAudiovisual;
 import domain.ImageTable;
 import domain.MethodAudioVisual;
-import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -32,8 +31,9 @@ import javax.swing.table.DefaultTableModel;
  * @author karol
  */
 public class AudiovisualInterface extends javax.swing.JFrame {
+
     MethodAudioVisual method;
-    
+
     String path = "registerAudioVisual.bin";
     BeansAudiovisual beansAudioVisual;
 
@@ -50,7 +50,6 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         }
     }
 
-    
     /*Este metodo lo que hace es leer nuestro archivo, en la condicion, preguntamos, si lo que hay en nuestro archivo es diferente de null
     entonces que nos lo escriba, le hacemmos un canstins*/
     public void readSerializable() {
@@ -94,12 +93,20 @@ public class AudiovisualInterface extends javax.swing.JFrame {
     public void enterRecord(File path) {
         try {
 
-            if (readCode() == -666) {
-                message("Dato incorrecto C");
-            } else if (readName() == null) {
+            if (codeNull().equals(null)) {
+                message("Dato incorrecto ");
+            } else if (nameNull().equals(null)) {
                 message("Dato incorrecto N");
-            } else if (readQuantify() == -666) {
+            } else if (quantifyNull().equals(null)) {
                 message("Dato incorrecto Avalible");
+            } else if (brandNull().equals(null)) {
+                message("Incorrect date");
+            } else if (sizeNull().equals(null)) {
+                message("Incorrect date");
+            } else if (projectNull().equals(null)) {
+                message("Incorrect date");
+            } else if (colorNull().equals(null)) {
+                message("Icorrect date");
             } else {
 
                 beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto(path));
@@ -109,71 +116,128 @@ public class AudiovisualInterface extends javax.swing.JFrame {
                 } else {
                     method.addRecord(beansAudioVisual);
                 }
-             
+
                 writeSerializable();//quitar
-            
+
                 listarRegistro();
-              clear();
+                clear();
             }
             System.out.println("7");
         } catch (Exception e) {
-            System.out.println("Error en enterToRegister" + e);
+            System.out.println("Incorrect date");
         }
     }
 
-    public void ModyfyRecordd(File path) {
+    public String nameNull() {
         try {
-
-            if (readCode() == -666) {
-                message("Incorrect date");
-            } else if (readName() == null) {
-                message("Incorrect date");
-            } else if (readQuantify() == -666) {
-                message("Incorrect date");
+            String name = "";
+            if (name.equals(fieldName.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
             } else {
-                int code = method.searchEnumeration(readCode());
-                if (fieldPhoto.getText().equalsIgnoreCase(""))//en caso al reg la ruta f este vacia
-                {
-                    beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto2(code));
-                } else {
-                    beansAudioVisual = new BeansAudiovisual(readBrand(), readSize(), readProjectType(), readColor(), readCode(), readName(), readQuantify(), readPhoto(path));
-                }
-
-                if (code == -1) {
-                    method.addRecord(beansAudioVisual);
-                } else {
-                    method.modifyRecord(code, beansAudioVisual);
-                }
-
-                writeSerializable();
-                listarRegistro();
+                return name;
             }
         } catch (Exception e) {
-            System.out.println("error listar registro");
+            System.out.println("ERROR");
+
         }
+        return null;
     }
 
-    public void deleteRecordd() {
+    public String codeNull() {
         try {
-            if (readCode() == -666) {
-                message("date Inco");
+            String name = "";
+            if (name.equals(fieldCode.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
             } else {
-                int code = method.searchEnumeration(readCode());
-                if (code == -1) {
-                    message("Enumeration exis");
-                } else {
-                    int s = JOptionPane.showConfirmDialog(null, "delete");
-                    if (s == 0) {
-                        method.deleteRecord(code);
-
-                        writeSerializable();
-                        listarRegistro();
-                    }
-                }
+                return name;
             }
-        } catch (HeadlessException e) {
-        }
+        } catch (Exception e) {
+            System.out.println("ERROR");
 
+        }
+        return null;
+    }
+
+    public String quantifyNull() {
+        try {
+            String name = "";
+            if (name.equals(fieldQuantify.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+                return name;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
+    }
+
+    public String brandNull() {
+        try {
+            String brand = "";
+            if (brand.equals(fieldBrand.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+                return brand;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
+    }
+
+    public String sizeNull() {
+        try {
+            String brand = "";
+            if (brand.equals(fieldSize.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+                return brand;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
+    }
+
+    public String colorNull() {
+        try {
+            String brand = "";
+            if (brand.equals(fieldColor.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+                return brand;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
+    }
+
+    public String projectNull() {
+        try {
+            String brand = "";
+            if (brand.equals(fieldProject.getText())) {
+                JOptionPane.showMessageDialog(null, "Incorrect date");
+                return null;
+            } else {
+                return brand;
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR");
+
+        }
+        return null;
     }
 
     public String readBrand() {
@@ -302,14 +366,6 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         table.setRowHeight(60);
     }
 
-
-    
-    
-    
-    
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -333,7 +389,6 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
@@ -414,15 +469,6 @@ public class AudiovisualInterface extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Lucida Handwriting", 1, 10)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/action_exit_close_remove_13915.png"))); // NOI18N
-        jButton4.setText("Delete");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         jButton5.setFont(new java.awt.Font("Lucida Handwriting", 1, 14)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/arrow_undo.png"))); // NOI18N
         jButton5.setText("Return");
@@ -467,16 +513,27 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(251, 251, 251))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(43, 43, 43))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(25, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(fieldBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -509,40 +566,19 @@ public class AudiovisualInterface extends javax.swing.JFrame {
                                         .addGap(14, 14, 14)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel9)
-                                            .addComponent(fieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                        .addGap(18, 18, 18))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jButton2)
-                        .addGap(60, 60, 60)
-                        .addComponent(jButton4)
-                        .addGap(59, 59, 59)
-                        .addComponent(jButton6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(fieldPhoto)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                            .addComponent(fieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(127, 127, 127)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lPhoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(fieldPhoto)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(fieldPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(112, 112, 112)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -556,7 +592,7 @@ public class AudiovisualInterface extends javax.swing.JFrame {
                             .addComponent(fieldSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fieldProject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fieldColor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -570,15 +606,27 @@ public class AudiovisualInterface extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
                                     .addComponent(jLabel1))
-                                .addGap(69, 69, 69)))))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(69, 69, 69)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3)
+                            .addComponent(fieldPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lPhoto, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addContainerGap())
@@ -633,10 +681,6 @@ clear();
         fieldColor.setText("");
 
     }
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      deleteRecordd();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tableMouseClicked
@@ -694,7 +738,6 @@ clear();
     private javax.swing.JTextField fieldSize;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;

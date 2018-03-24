@@ -5,7 +5,7 @@
  */
 package domain;
 
-import Interface.RegisterBookInterface;
+import GUI.RegisterBookInterface;
 import java.io.Serializable;
 
 /**

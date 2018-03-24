@@ -5,7 +5,7 @@
  */
 package proyectouno;
 
-import Interface.Main;
+import GUI.Main;
 
 /**
  *
