@@ -413,6 +413,12 @@ public class AudiovisualInterface extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText("Code:");
 
+        fieldCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldCodeActionPerformed(evt);
+            }
+        });
+
         jLabel4.setFont(new java.awt.Font("Lucida Handwriting", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Quantity:");
@@ -647,10 +653,20 @@ public class AudiovisualInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    try{
     File path= new File(fieldPhoto.getText());
-    enterRecord(path);
+    int code=(fieldCode.getText().length());
+    if(code>0 && code<=5){
+     enterRecord(path);
+    }else if(code>5)
+           JOptionPane.showMessageDialog(null, "The code must be meyor to 5 caracters");
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    catch(Exception e){
+            System.out.println("incorrecte");
+            }
+    
+    
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
            JFileChooser jf = new JFileChooser();
         FileNameExtensionFilter fil = new FileNameExtensionFilter("JPG, PNG & GIF","jpg","png","gif");
@@ -684,6 +700,10 @@ clear();
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tableMouseClicked
+
+    private void fieldCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fieldCodeActionPerformed
 
     
     

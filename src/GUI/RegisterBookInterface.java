@@ -33,7 +33,7 @@ import javax.swing.table.DefaultTableModel;
 public class RegisterBookInterface extends javax.swing.JFrame {
 
     Method method;
-
+    int cont=1;
     int clic_tabla;
     String path = "registerPhysicalBooks.bin";
     BeansPhysicists beansBooks;
@@ -49,7 +49,7 @@ public class RegisterBookInterface extends javax.swing.JFrame {
 
             readSerializable();
             listarRegistro();
-            fieldPhoto.setEditable(false);
+            fieldPhoto.setEditable(true);
             fieldEnumeration.setText("1");
         
         } catch (Exception e) {
@@ -728,17 +728,18 @@ public class RegisterBookInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldNameActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         int contador=1;
+      
         try {
        
             File pathh = new File(fieldPhoto.getText());
               this.ingresarRegistro(pathh);
-             if(evt.getSource()==jButton1){   
-                 contador=contador+1;
-                fieldEnumeration.setText(String.valueOf(contador ));
-           
+             cont++;
+             String numero=String.valueOf(cont);
+             fieldEnumeration.setText(numero);
+             System.out.println(numero);
+            
                       
-             }
+             
         } catch (Exception e) {
             message("Date incorrete jb");
         }
