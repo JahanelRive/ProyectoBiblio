@@ -26,6 +26,8 @@ public class StudentFile {
     public String myFilePath;//rut
     //Constructors
 
+   // public StudentFile(){}
+    
     public StudentFile(File file) throws IOException {
         try {
             //almaceno la rut
@@ -153,7 +155,7 @@ public class StudentFile {
             }
 
             JOptionPane.showMessageDialog(null, "The student is not registered");
-            //JOptionPane.showMessageDialog((Component) icono, "Message "+"", "The vehicle is not registered", JOptionPane.ERROR_MESSAGE);
+    
 
         } catch (HeadlessException | IOException e) {
 

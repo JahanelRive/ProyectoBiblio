@@ -82,7 +82,7 @@ public class Student {
     //to String
     @Override
     public String toString() {
-        return "Student" + "name=" + this.getName() + ", lastName=" + this.getLastName() + ", id=" + this.getId() + ", Card=" + this.getCarnet() + ", career=" + this.getCareer();
+        return "Student: " + "name=" + this.getName() + ", lastName=" + this.getLastName() + ", id=" + this.getId() + ", Card=" + this.getCarnet() + ", career=" + this.getCareer() +"\n";
     }
 
     public int size() {

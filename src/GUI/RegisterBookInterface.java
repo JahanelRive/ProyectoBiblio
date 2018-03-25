@@ -267,15 +267,12 @@ public class RegisterBookInterface extends javax.swing.JFrame {
                 return false;
             }
         };
-        // dt.addColumn("Enumeration");
+        
         dt.addColumn("Enumeration");
         dt.addColumn("Name");
         dt.addColumn("Code");
         dt.addColumn("Number book Availabe");
-//         dt.addColumn("Year");
-//         dt.addColumn("Author");
-//         dt.addColumn("Descripcion");
-//dt.addColumn("Type book");
+
         dt.addColumn("Foto");
 
         table.setDefaultRenderer(Object.class, new ImageTable());
@@ -290,11 +287,7 @@ public class RegisterBookInterface extends javax.swing.JFrame {
             row[1] = beansBooks.getNameBook();
             row[2] = beansBooks.getCodeBook();
             row[3] = beansBooks.getNumberBookAvailable();
-//            row[4]=beansBooks.getYear();
-//            row[5] = beansBooks.getAuthor();
-//            row[6] = beansBooks.getDescription();
-//            row[7]=beansBooks.getTipoLibro();
-//           
+
 
             try {
                 byte[] bi = beansBooks.getPhoto();
