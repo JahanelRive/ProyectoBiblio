@@ -6,6 +6,7 @@
 package domain;
 
 import java.io.Serializable;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +18,7 @@ public class BeansPhysicists extends BeansBook implements Serializable {
     String codeBook;
     int numberBookAvailable;
     byte[] photo;
+    boolean avalaible=false;
 
     public BeansPhysicists() {
         super();
@@ -24,12 +26,13 @@ public class BeansPhysicists extends BeansBook implements Serializable {
     }
 
 
-    public BeansPhysicists(int enumeration, String nameBook, String codeBook, int numberBookAvailable, byte[] photo, String year, String author, Object description, String tipoLibro) {
+    public BeansPhysicists(int enumeration, String nameBook, String codeBook, int numberBookAvailable,boolean avalaible , byte[] photo,String year, String author, Object description, String tipoLibro) {
         super(year, author, description, tipoLibro);
        this.enumeration=enumeration;
         this.nameBook = nameBook;
         this.codeBook = codeBook;
         this.numberBookAvailable = numberBookAvailable;
+        this.avalaible=avalaible;
         this.photo = photo;
     }
 
@@ -76,12 +79,39 @@ public class BeansPhysicists extends BeansBook implements Serializable {
         this.photo = photo;
     }
 
+    public boolean getAvalaible() {
+        return avalaible;
+    }
+
+    public void setAvalaible(boolean avalaible) {
+        this.avalaible = avalaible;
+    }
+
     @Override
     public String toString() {
-        return  super.toString()+"BeansPhysicists{" + "enumeration=" + enumeration + ", nameBook=" + nameBook + ", codeBook=" + codeBook + ", numberBookAvailable=" + numberBookAvailable + ", photo=" + photo + '}';
+        return super.toString()+ "BeansPhysicists{" + "enumeration=" + enumeration + ", nameBook=" + nameBook + ", codeBook=" + codeBook + ", numberBookAvailable=" + numberBookAvailable + ", photo=" + photo + ", loan=" + avalaible + '}';
     }
 
     
+    
+
+    
+public boolean borrowed( ){
+if((avalaible)==true){
+this.numberBookAvailable= this.getNumberBookAvailable()-1;
+    JOptionPane.showMessageDialog(null, "borrowed exited");
+return true;
+}else
+return false;
+}
+
+public boolean notAvailable(){
+if(avalaible==false){
+this.numberBookAvailable=this.getNumberBookAvailable();
+numberBookAvailable=0;
+}
+return false;
+}
 
 
 

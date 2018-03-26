@@ -16,17 +16,20 @@ public class BeansAudiovisual extends BeansSuperAudioVisual implements Serializa
     private int code;
     private String name;
     private int quantify;
+    boolean available=false;
     byte[] photo;
+    
 
     public BeansAudiovisual() {
         super();
     }
 
-    public BeansAudiovisual(String brand, String size, String projectorType, String color, int code, String name, int quantify, byte[] photo) {
+    public BeansAudiovisual(String brand, String size, String projectorType, String color, int code, String name, int quantify,boolean available ,byte[] photo) {
         super(brand, size, projectorType, color);
         this.code = code;
         this.name = name;
         this.quantify = quantify;
+        this.available=available;
         this.photo = photo;
     }
 
@@ -62,9 +65,19 @@ public class BeansAudiovisual extends BeansSuperAudioVisual implements Serializa
         this.photo = photo;
     }
 
+    public boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString() {
-        return super.toString() + "BeansAudiovisual{" + "code=" + code + ", name=" + name + ", quantify=" + quantify + ", photo=" + photo + '}';
+        return  super.toString() +"BeansAudiovisual{" + "code=" + code + ", name=" + name + ", quantify=" + quantify + ", available=" + available + ", photo=" + photo + '}';
     }
+
+   
 
 }

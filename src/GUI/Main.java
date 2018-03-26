@@ -148,8 +148,9 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  BookLoans bl= new BookLoans();
-  bl.setVisible(true);
+LoansOrDevolutions loansOrDevolutions= new LoansOrDevolutions();
+loansOrDevolutions.setVisible(true);
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

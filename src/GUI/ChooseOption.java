@@ -113,8 +113,8 @@ public class ChooseOption extends javax.swing.JFrame {
 
     private void phisiquesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phisiquesActionPerformed
 
- AutocompleterPhisiquesBook autoC= new AutocompleterPhisiquesBook();
-autoC.setVisible(true);
+BookLoans bookLoans = new BookLoans();
+bookLoans.setVisible(true);
     }//GEN-LAST:event_phisiquesActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

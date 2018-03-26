@@ -9,7 +9,10 @@ import domain.Student;
 import file.StudentFile;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -23,7 +26,50 @@ public class BookLoans extends javax.swing.JFrame {
     public BookLoans() {
         initComponents();
     }
+  public static String card=" ";
+ // public static String name="";
+    
+    
+    public void sendField(){
+    AutocompleterPhisiquesBook fin= new AutocompleterPhisiquesBook();
+    fin.cardL.setText(fieldCard.getText());
+    
+    
+    
+    }
+    public void validateYourCard(){
+    
+     File path = new File("./Student.dat");
+        LoansOrDevolutions loansOrDevolutions = new LoansOrDevolutions();
+        Student student = new Student();
 
+       card= fieldCard.getText();
+        try {
+            StudentFile sf;
+            sf = new StudentFile(path);
+            for (int i = 0; i < sf.regsQuantity; i++) {//accediendo a la cantidad de registros que hay en el archivo
+                if (card.equalsIgnoreCase(sf.getRead(i).getCarnet())) {
+                    JOptionPane.showMessageDialog(null, "Correct");
+                    resul.setText("Found results");
+                    nameLo.setText(sf.getRead(i).getName());
+                    lastNameL.setText(sf.getRead(i).getLastName());
+                    idL.setText(sf.getRead(i).getId());
+                    carerL.setText(sf.getRead(i).getCareer());
+                 
+
+                   
+                }else{
+                JOptionPane.showMessageDialog(null, "You don have register");
+
+                }
+
+            }
+            
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Incorrect value");
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,13 +82,14 @@ public class BookLoans extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        fieldCarnet = new javax.swing.JTextField();
+        fieldCard = new javax.swing.JTextField();
         check = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        name = new javax.swing.JLabel();
-        lastName = new javax.swing.JLabel();
-        id = new javax.swing.JLabel();
-        career = new javax.swing.JLabel();
+        nameLo = new javax.swing.JLabel();
+        lastNameL = new javax.swing.JLabel();
+        idL = new javax.swing.JLabel();
+        carerL = new javax.swing.JLabel();
+        resul = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Book Loans");
@@ -56,9 +103,9 @@ public class BookLoans extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
         jLabel2.setText("Enter your card:");
 
-        fieldCarnet.addActionListener(new java.awt.event.ActionListener() {
+        fieldCard.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldCarnetActionPerformed(evt);
+                fieldCardActionPerformed(evt);
             }
         });
 
@@ -78,56 +125,84 @@ public class BookLoans extends javax.swing.JFrame {
             }
         });
 
-        name.setText("Name:");
+        nameLo.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
 
-        lastName.setText("lastName:");
+        lastNameL.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
 
-        id.setText("Id:");
+        idL.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
 
-        career.setText("Carrer:");
+        carerL.setFont(new java.awt.Font("Lucida Handwriting", 1, 12)); // NOI18N
+
+        resul.setFont(new java.awt.Font("Lucida Handwriting", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1)
-                    .addComponent(jLabel2)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(resul, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(fieldCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(check)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(career)
-                    .addComponent(id)
-                    .addComponent(lastName)
-                    .addComponent(name))
-                .addContainerGap(86, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1)
+                                .addGap(27, 27, 27)
+                                .addComponent(check)
+                                .addGap(55, 55, 55)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(idL, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(carerL, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(fieldCard, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(79, 79, 79)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(nameLo, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                    .addComponent(lastNameL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(name))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(lastName))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(check)
-                    .addComponent(id))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(career)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(resul, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(nameLo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(fieldCard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(lastNameL, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(check)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(idL, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carerL, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,41 +220,31 @@ public class BookLoans extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void checkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkActionPerformed
-        File path = new File("./Student.dat");
-        LoansOrDevolutions loansOrDevolutions = new LoansOrDevolutions();
-        Student student = new Student();
-
-        String card = fieldCarnet.getText();
+     File path = new File("./Student.dat");
+     StudentFile sf;
+    
         try {
-            StudentFile sf;
             sf = new StudentFile(path);
-            for (int i = 0; i < sf.regsQuantity; i++) {//accediendo a la cantidad de registros que hay en el archivo
-                if (card.equalsIgnoreCase(sf.getRead(i).getCarnet())) {
-                    JOptionPane.showMessageDialog(null, "Correct");
-                    // sf.putValue(i, student);
-//                    name.setText();
-//                    lastName.setText("");
-//                    id.setText("");
-//                    career.setText("");
-                   
-                    // loansOrDevolutions.setVisible(true);
-                }//if
-
-            }
-            JOptionPane.showMessageDialog(null, "You don have register");
-
+            validateYourCard();
+            AutocompleterPhisiquesBook auto = new AutocompleterPhisiquesBook();
+            auto.setVisible(true);
+            this.setVisible(false);
+         
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Incorrect value");
+           System.out.println("Error");
         }
+        
     }//GEN-LAST:event_checkActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-this.dispose();        // TODO add your handling code here:
+this.dispose();  
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void fieldCarnetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCarnetActionPerformed
+    private void fieldCardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldCardActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldCarnetActionPerformed
+    }//GEN-LAST:event_fieldCardActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,15 +282,16 @@ this.dispose();        // TODO add your handling code here:
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel career;
+    private javax.swing.JLabel carerL;
     private javax.swing.JButton check;
-    private javax.swing.JTextField fieldCarnet;
-    private javax.swing.JLabel id;
+    public static javax.swing.JTextField fieldCard;
+    private javax.swing.JLabel idL;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lastName;
-    private javax.swing.JLabel name;
+    private javax.swing.JLabel lastNameL;
+    public static javax.swing.JLabel nameLo;
+    private javax.swing.JLabel resul;
     // End of variables declaration//GEN-END:variables
 }
